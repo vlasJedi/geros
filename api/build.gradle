@@ -1,10 +1,10 @@
 plugins {
 	id 'java'
-	id 'org.springframework.boot' version '3.5.6'
 	id 'io.spring.dependency-management' version '1.1.7'
+	id 'org.springframework.boot' version '3.5.6' apply false
 }
 
-group = 'vlas.geros.microservices.core.productcomposite'
+group = 'vlas.geros.microservices.api'
 version = '1.0.0-SNAPSHOT'
 description = 'Demo project for Spring Boot'
 
@@ -18,14 +18,24 @@ repositories {
 	mavenCentral()
 }
 
+ext {
+	springBootVersion = '3.5.6'
+}
+
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'io.projectreactor:reactor-test'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+dependencyManagement {
+	imports {
+		mavenBom org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES
+	}
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+
+
